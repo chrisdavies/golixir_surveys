@@ -1,0 +1,4 @@
+[ "calendar": {:git, "git://github.com/mururu/elixir-calendar.git", "8944958969cf73df8b6fd96a53d3bf156f4c841c", []},
+  "csvlixir": {:git, "git://github.com/jimm/csvlixir.git", "419d86f3a9956b5bcb890ca7a75a9c5219317725", []},
+  "elixir-calendar": {:git, "git://github.com/mururu/elixir-calendar.git", "8944958969cf73df8b6fd96a53d3bf156f4c841c", []},
+  "elixir-datetime": {:git, "git://github.com/alco/elixir-datetime.git", "c2455433c8822591df5a2900ea65de57f123a1f2", []} ]

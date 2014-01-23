@@ -1,0 +1,1 @@
+defrecord Question, title: nil, type: nil, section: 0
