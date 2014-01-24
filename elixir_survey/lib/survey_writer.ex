@@ -16,7 +16,7 @@ defmodule SurveyWriter do
   end
 
   defp to_array(Question[title: title, type: type, section: id]) do
-    ["question", title, type, Kernel.integer_to_binary(id)]
+    ["question", title, QuestionType.to_string(type), Kernel.integer_to_binary(id)]
   end
 
 end

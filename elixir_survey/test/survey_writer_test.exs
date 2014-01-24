@@ -7,8 +7,8 @@ defmodule SurveyWriterTest do
         Section.new(title: "hello", id: 1),
         Section.new(title: "world", id: 2)],
       [
-        Question.new(title: "qhello", type: "1-5", section: 1),
-        Question.new(title: "qworld", type: "para", section: 2)]
+        Question.new(title: "qhello", type: QuestionType.range, section: 1),
+        Question.new(title: "qworld", type: QuestionType.para, section: 2)]
     })
 
     expected = """
