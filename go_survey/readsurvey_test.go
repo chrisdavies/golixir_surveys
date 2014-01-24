@@ -41,8 +41,8 @@ func Test_records_deserialize_sections(t *testing.T) {
 }
 
 func Test_valid_question_types_supported(t *testing.T) {
-	assertQuestionType("Question, Whazzup, 1-5, 0", "1-5", t)
-	assertQuestionType("Question, Whazzup, para, 0", "para", t)
+	assertQuestionType("Question, Whazzup, 1-5, 0", RangeQuestionType, t)
+	assertQuestionType("Question, Whazzup, para, 0", ParaQuestionType, t)
 }
 
 func Test_invalid_record_types_cause_errors(t *testing.T) {
@@ -69,11 +69,11 @@ func assert(cond bool, str string, t *testing.T) {
 	}
 }
 
-func assertQuestionType(record string, questionType string, t *testing.T) {
+func assertQuestionType(record string, questionType QuestionType, t *testing.T) {
 	_, qs, err := ReadSurvey(rec(record))
 	if recordIsNotEmpty(t, qs, err) {
 		var question = qs[0]
-		assert(question.QuestionType == questionType, "Question type was "+question.QuestionType+" but expected "+questionType, t)
+		assert(question.QuestionType == questionType, "Question type was " + string(question.QuestionType) + " but expected " + string(questionType), t)
 	}
 }
 

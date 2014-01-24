@@ -15,8 +15,8 @@ func Test_sections_and_questions_are_written(t *testing.T) {
 	}
 
 	questions := []*Question {
-		&Question{Title: "qhello", QuestionType: "1-5", Section: 1},
-		&Question{Title: "qworld", QuestionType: "para", Section: 2},
+		&Question{Title: "qhello", QuestionType: RangeQuestionType, Section: 1},
+		&Question{Title: "qworld", QuestionType: ParaQuestionType, Section: 2},
 	}
 
 	err := WriteSurvey(csv.NewWriter(&out), sections, questions)

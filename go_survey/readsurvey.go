@@ -47,38 +47,44 @@ func extractRecord(line []string) (interface{}, error) {
 		return csvError("Records must be in the format 'type, label, question-type, section-id'")
 	}
 
+	recordType := strings.ToLower(line[0])
+	title := strings.TrimSpace(line[1])
+	questionType := line[2]
 	sectionId, err := strconv.Atoi(line[3])
 
 	if err != nil {
 		return csvError("Section ids must be numeric")
 	}
 
-	recordType := strings.ToLower(line[0])
-
-	title := strings.TrimSpace(line[1])
-
 	if title == "" {
 		return csvError("Title cannot be empty")
 	}
 
-	return newRecord(recordType, title, line[2], sectionId)
+	return newRecord(recordType, title, questionType, sectionId)
 }
 
-func newRecord(recordType string, label string, questionType string, sectionId int) (interface{}, error) {
+func newRecord(recordType string, title string, questionType string, sectionId int) (interface{}, error) {
 	if recordType == "section" {
-		return &Section{Title: label, Id: sectionId}, nil
+		return newSection(title, sectionId)
 	} else if recordType == "question" {
-		questionType = strings.ToLower(questionType)
-
-		switch questionType {
-		case "1-5", "para":
-			return &Question{Title: label, QuestionType: questionType, Section: sectionId}, nil
-		default:
-			return csvError("Invalid question type '" + questionType + "'")
-		}
+		return newQuestion(title, questionType, sectionId)
 	}
 
 	return csvError("Invalid record type '" + recordType + "'")
+}
+
+func newSection(title string, sectionId int) (interface{}, error) {
+	return &Section{Title: title, Id: sectionId}, nil
+}
+
+func newQuestion(title string, questionType string, sectionId int) (interface{}, error) {
+	questionTypeByte, err := QuestionTypeFromString(questionType)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &Question{Title: title, QuestionType: questionTypeByte, Section: sectionId}, nil
 }
 
 func csvError(s string) (interface{}, error) {

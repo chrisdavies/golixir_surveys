@@ -37,7 +37,7 @@ func Test_active_after_cant_be_greater_than_active_until(t *testing.T) {
 
 func Test_questions_can_reference_existing_sections(t *testing.T) {
 	shouldnt_err(t, func (s *Survey) {
-		q := &Question{Title: "Yo", QuestionType: "1-5", Section: 1}
+		q := &Question{Title: "Yo", QuestionType: RangeQuestionType, Section: 1}
 		sect := &Section{Title: "Bo", Id: 1}
 		s.Questions = []*Question{ q }
 		s.Sections = []*Section { sect }
@@ -46,7 +46,7 @@ func Test_questions_can_reference_existing_sections(t *testing.T) {
 
 func Test_questions_cannot_reference_bad_sections(t *testing.T) {
 	should_err(t, func (s *Survey) {
-		q := &Question{Title: "Yo", QuestionType: "1-5", Section: 1}
+		q := &Question{Title: "Yo", QuestionType: RangeQuestionType, Section: 1}
 		sect := &Section{Title: "Bo", Id: 0}
 		s.Questions = []*Question{ q }
 		s.Sections = []*Section { sect }

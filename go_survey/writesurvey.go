@@ -35,10 +35,16 @@ func writeSection(w *csv.Writer, section *Section) error {
 }
 
 func writeQuestion(w *csv.Writer, question *Question) error {
+	questionType, err := QuestionTypeToString(question.QuestionType)
+
+	if err != nil {
+		return err
+	}
+
 	return w.Write([]string {
 		"question",
 		question.Title,
-		question.QuestionType,
+		questionType,
 		strconv.Itoa(question.Section),
 	})
 }
