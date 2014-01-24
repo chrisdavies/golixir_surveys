@@ -19,6 +19,12 @@ defmodule SurveyReaderTest do
     end
   end
 
+  test "sections must have a title" do 
+    assert_raise CSVError, fn ->
+      SurveyReader.readcsv("section, , , 0")
+    end
+  end
+
   test "invalid question types raise errors" do
     assert_raise CSVError, fn ->
       SurveyReader.readcsv("question, hello, foo, 0")

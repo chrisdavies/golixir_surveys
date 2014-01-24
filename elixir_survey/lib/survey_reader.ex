@@ -14,23 +14,23 @@ defmodule SurveyReader do
   defp process_line([line | tail], records) do
   	case line do 
   		[rec_type, title, q_type, section_id] ->
-  			process_line(tail, add_record(lower(rec_type), title, q_type, section_id, records))
+  			process_line(tail, add_record(lower(rec_type), strip(title), lower(q_type), to_int(section_id), records))
   		_ -> raise CSVError, description: "Records must be in the format 'record-type, title, question-type, section-id'"
   	end
   end
 
   defp add_record("section", title, _, id, {sections, questions}) do
-  	{[Section.new(title: strip(title), id: to_int(id))] ++ sections, questions}
+    cond do
+      title == "" -> raise CSVError, description: "Section titles cannot be blank"
+      true -> {[Section.new(title: title, id: id)] ++ sections, questions}
+    end
   end
 
   defp add_record("question", title, type, section_id, {sections, questions}) do
-  	type = lower(type)
-    title = strip(title)
-
   	cond do
-      title == "" -> raise CSVError, description: "Title cannot be blank"
+      title == "" -> raise CSVError, description: "Question titles cannot be blank"
   		type == "1-5" || type == "para" -> 
-  			{sections, [Question.new(title: strip(title), type: type, section: to_int(section_id))] ++ questions}
+  			{sections, [Question.new(title: title, type: type, section: section_id)] ++ questions}
   		true -> raise CSVError, description: "Unknown question type #{type}"
   	end
   end
