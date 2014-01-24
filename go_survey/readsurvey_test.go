@@ -20,6 +20,18 @@ func Test_records_must_have_numeric_section_id(t *testing.T) {
 	}
 }
 
+func Test_title_is_not_blank(t *testing.T) {
+	_, _, err := ReadSurvey(rec("section, , , 0"))
+	if err == nil {
+		t.Error("Section title should be required")
+	}
+
+	_, _, err = ReadSurvey(rec("question, , para, 0"))
+	if err == nil {
+		t.Error("Question title should be required")
+	}
+}
+
 func Test_records_deserialize_sections(t *testing.T) {
 	ss, _, err := ReadSurvey(rec("Section, Whazzup, , 0"))
 	if recordIsNotEmpty(t, ss, err) {

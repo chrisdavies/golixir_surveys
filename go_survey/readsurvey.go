@@ -55,7 +55,13 @@ func extractRecord(line []string) (interface{}, error) {
 
 	recordType := strings.ToLower(line[0])
 
-	return newRecord(recordType, line[1], line[2], sectionId)
+	title := strings.TrimSpace(line[1])
+
+	if title == "" {
+		return csvError("Title cannot be empty")
+	}
+
+	return newRecord(recordType, title, line[2], sectionId)
 }
 
 func newRecord(recordType string, label string, questionType string, sectionId int) (interface{}, error) {
