@@ -21,7 +21,7 @@ defmodule SurveyTest do
     should_err fn(survey) -> survey.sections(nil) end
   end
 
-  test "title is required" do
+  test "survey title is required" do
     should_err fn(survey) -> survey.title(nil) end
   end
 

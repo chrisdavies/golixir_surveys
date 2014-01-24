@@ -25,8 +25,10 @@ defmodule SurveyReader do
 
   defp add_record("question", title, type, section_id, {sections, questions}) do
   	type = lower(type)
+    title = strip(title)
 
   	cond do
+      title == "" -> raise CSVError, description: "Title cannot be blank"
   		type == "1-5" || type == "para" -> 
   			{sections, [Question.new(title: strip(title), type: type, section: to_int(section_id))] ++ questions}
   		true -> raise CSVError, description: "Unknown question type #{type}"
