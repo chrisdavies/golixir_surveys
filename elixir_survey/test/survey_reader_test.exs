@@ -44,7 +44,7 @@ defmodule SurveyReaderTest do
 
   test "question type is not case-sensitive" do
     {_, [question]} = SurveyReader.readcsv("Question, bonjour, Para, 1")
-    assert question == Question.new(title: "bonjour", type: QuestionType.para, section: 1)
+    assert question == Question.new(title: "bonjour", type: :para, section: 1)
   end
 
   test "questions and sections deserialize properly" do
@@ -56,8 +56,8 @@ question, q-para, para, 0
     {sections, questions} = SurveyReader.readcsv(record)
     
     expectedQuestions = [
-      Question.new(title: "q-para", type: QuestionType.para, section: 0),
-      Question.new(title: "q-range", type: QuestionType.range, section: 0)]
+      Question.new(title: "q-para", type: :para, section: 0),
+      Question.new(title: "q-range", type: :range, section: 0)]
     
     compare_lists expectedQuestions, questions
     compare_lists [Section.new(title: "hello", id: 0)], sections

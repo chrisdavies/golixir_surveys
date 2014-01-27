@@ -39,8 +39,8 @@ defmodule AnswerTest do
 
   def validate_answers(answers) do
       questions = [
-        Question.new(title: "qhello", type: QuestionType.range, section: 1),
-        Question.new(title: "qworld", type: QuestionType.para, section: 2)]
+        Question.new(title: "qhello", type: :range, section: 1),
+        Question.new(title: "qworld", type: :para, section: 2)]
 
       AnswerValidator.validate(questions, answers)
   end

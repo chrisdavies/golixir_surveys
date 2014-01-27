@@ -30,7 +30,7 @@ defmodule SurveyReader do
   	cond do
       title == "" -> raise CSVError, description: "Question titles cannot be blank"
   		type == "1-5" || type == "para" -> 
-  			{sections, [Question.new(title: title, type: QuestionType.from_string(type), section: section_id)] ++ questions}
+  			{sections, [Question.new(title: title, type: QuestionType.to_atom(type), section: section_id)] ++ questions}
   		true -> raise CSVError, description: "Unknown question type #{type}"
   	end
   end

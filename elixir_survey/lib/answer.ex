@@ -7,7 +7,7 @@ defmodule AnswerValidator do
 		verify_answers questions, answers
 	end
 
-	defp verify_answers([Question[type: 0] |questions], [answer |answers]) do
+	defp verify_answers([Question[type: :range] |questions], [answer |answers]) do
 		if (answer != nil && (answer < 1 || answer > 5)) do
 			raise ValidationError, description: "Range answers must be between 1 and 5"
 		end
@@ -15,7 +15,7 @@ defmodule AnswerValidator do
 		verify_answers questions, answers
 	end
 
-	defp verify_answers([Question[type: 1] |questions], [answer |answers]) do
+	defp verify_answers([Question[type: :para] |questions], [answer |answers]) do
 		if answer != nil && !is_binary answer do
 			raise ValidationError, description: "Para answers must be text"
 		end
